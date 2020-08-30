@@ -2,7 +2,6 @@
 
 
 import warnings
-from skfem import MeshTri
 
 
 def process(
@@ -22,10 +21,7 @@ def process(
         else:
             mesh = initial
     else:
-        warnings.warn(("Initial mesh not given. "
-                       "Using the unit square."))
-        mesh = MeshTri()
-        mesh.refine()
+        raise Exception("The initial mesh not given.")
 
     for itr in range(max_refloops):
         estimators = solve(mesh, **params)
@@ -38,7 +34,8 @@ def process(
                 break
 
     if itr == max_refloops:
-        warnings.warn(("Criterion not satisfied in "
-                       "{} refinement loops.".format(itr)))
+        warnings.warn(
+            ("Criterion not satisfied in " "{} refinement loops.".format(itr))
+        )
 
     return mesh

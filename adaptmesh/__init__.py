@@ -1,9 +1,11 @@
+from .process import process
+
+
 def triangulate(
-        corner_points,
-        max_refloops=6,
-        theta=0.8,
+    corner_points,
+    max_refloops=6,
+    theta=0.8,
 ):
-    from .process import process
     from .initial import cdt
     from .solve import laplace
     from .mark import adaptive_theta
@@ -19,5 +21,5 @@ def triangulate(
         criterion=quality,
         corner_points=corner_points,
         max_refloops=max_refloops,
-        theta=theta
+        theta=theta,
     )

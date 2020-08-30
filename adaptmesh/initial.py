@@ -8,9 +8,7 @@ from .tri import ToPointsAndSegments, triangulate
 
 
 def cdt(corner_points=None, **params):
-    """Create a CDT mesh using tri.
-
-    """
+    """Create a CDT mesh using tri."""
     if corner_points is None:
         raise Exception("Parameter 'corner_points' required.")
 
@@ -33,7 +31,7 @@ def cdt(corner_points=None, **params):
 
         # add new verts
         newtri = []
-        mpx, mpy = 0., 0.
+        mpx, mpy = 0.0, 0.0
         for vert in triangle.vertices:
             if (vert.x, vert.y) not in verts:
                 verts[(vert.x, vert.y)] = i
@@ -43,8 +41,8 @@ def cdt(corner_points=None, **params):
             mpx += vert.x
             mpy += vert.y
 
-        mpx /= 3.
-        mpy /= 3.
+        mpx /= 3.0
+        mpy /= 3.0
 
         if not path.contains_point([mpx, mpy]):
             continue
