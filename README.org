@@ -1,0 +1,12 @@
+* adaptmesh: Adaptive mesh generation and refinement
+
+Harness the power of the adaptive process into mesh generation.
+
+Ships with customized versions of the following packages:
+
+- tri (ported to Python 3)
+- optimesh (
+
+* Examples
+
+** Triangular mesh generation
