@@ -2,9 +2,7 @@ from .process import process
 
 
 def triangulate(
-    corner_points,
-    max_refloops=6,
-    theta=0.8,
+    corner_points, max_refloops=6, theta=0.8, smooth_steps=50, avg_quality=0.9
 ):
     from .initial import cdt
     from .solve import laplace
