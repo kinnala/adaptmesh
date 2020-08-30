@@ -5,8 +5,8 @@ import numpy as np
 from .meshplex import MeshTri
 
 
-def avg_quality(m, avg_quality=0.9, **params):
+def avg_quality(m, quality=0.9, **params):
     mp = MeshTri(m.p.T, m.t.T)
-    if np.mean(mp.cell_quality) > avg_quality:
+    if np.mean(mp.cell_quality) > quality:
         return True
     return False
