@@ -1,12 +1,19 @@
-* adaptmesh: Adaptive mesh generation and refinement
+* adaptmesh
 
-Harness the power of the adaptive process into mesh generation.
-
-Ships with customized versions of the following packages:
-
-- tri (ported to Python 3)
-- optimesh (
+Create meshes by harnessing the power of the adaptive process.
 
 * Examples
 
 ** Triangular mesh generation
+
+* Licensing
+
+The main source code of adaptmesh is distributed with the MIT License; see
+LICENSE.
+
+Ships with customized versions of the following packages:
+
+- tri (ported to Python 3; MIT)
+- optimesh (forked from v0.6.2; last version with MIT; trimmed down
+  version with minor changes)
+- meshplex (forked from v0.12.3; last version with MIT)

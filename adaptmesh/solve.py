@@ -3,7 +3,8 @@
 
 import numpy as np
 from skfem import ElementTriP1, InteriorBasis, FacetBasis, Functional, solve, condense
-from skfem.models.poisson import laplace, unit_load
+from skfem.models.poisson import laplace as laplacian, unit_load
+from skfem.helpers import grad
 
 
 def laplace(m, **params):
@@ -17,7 +18,7 @@ def laplace(m, **params):
     """
     e = ElementTriP1()
     basis = InteriorBasis(m, e)
-    A = laplace.assemble(basis)
+    A = laplacian.assemble(basis)
     b = unit_load.assemble(basis)
     u = solve(*condense(A, b, I=m.interior_nodes()))
 

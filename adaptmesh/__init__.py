@@ -11,14 +11,15 @@ def triangulate(
     from .mark import adaptive_theta
     from .refine import rgb
     from .smooth import cpt
+    from .criterion import avg_quality
 
-    process(
+    return process(
         initial=cdt,
         solve=laplace,
         mark=adaptive_theta,
         refine=rgb,
         smooth=cpt,
-        criterion=quality,
+        criterion=avg_quality,
         corner_points=corner_points,
         max_refloops=max_refloops,
         theta=theta,

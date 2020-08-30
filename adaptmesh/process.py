@@ -35,7 +35,7 @@ def process(
 
     if itr == max_refloops:
         warnings.warn(
-            ("Criterion not satisfied in " "{} refinement loops.".format(itr))
+            "Criterion not satisfied in {} refinement loops.".format(itr)
         )
 
     return mesh
