@@ -21,6 +21,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest black isort
         pip install .
+    - name: Test with pytest
+      run: |
+        pytest
     - name: Lint with isort
       run: |
         isort --check .
@@ -30,6 +33,3 @@ jobs:
     - name: Lint with black
       run: |
         black --check .
-    - name: Test with pytest
-      run: |
-        pytest
