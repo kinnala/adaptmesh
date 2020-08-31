@@ -2,9 +2,9 @@ from simplegeom.geometry import LineString
 from topomap.loopfactory import find_loops
 from topomap.topomap import TopoMap
 
-from tri import ToPointsAndSegments, triangulate
-from tri.delaunay import (InteriorTriangleIterator, RegionatedTriangleIterator,
-                          TriangleIterator, ccw, output_triangles)
+from . import ToPointsAndSegments, triangulate
+from .delaunay import (InteriorTriangleIterator, RegionatedTriangleIterator,
+                       TriangleIterator, ccw, output_triangles)
 
 # from splitarea.flagging import MidpointHarvester
 # from splitarea.densify import densify

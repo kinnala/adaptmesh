@@ -7,9 +7,9 @@ from datetime import datetime
 from itertools import chain
 from math import ceil, cos, hypot, pi, sin, sqrt
 from operator import itemgetter
-from random import randint, random, shuffle
+from random import randint, random, shuffle, seed
 
-random.seed(0)
+seed(0)
 
 
 try:
