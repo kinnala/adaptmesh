@@ -12,6 +12,13 @@ Installation happens via PyPI/pip:
 pip install adaptmesh
 ```
 
+## Dependencies
+
+- `numpy`
+- `scipy`
+- `matplotlib`
+- `scikit-fem`
+
 ## Examples
 
 ### Square with default settings
@@ -50,9 +57,9 @@ LICENSE.
 
 `adaptmesh` ships with customized versions of the following packages:
 
--   `tri` (ported to Python 3; MIT)
--   `optimesh` (forked from v0.6.2; last version with MIT - later versions are
-    GPLv3; trimmed down version with minor changes)
--   `meshplex` (forked from v0.12.3; last version with MIT - later versions are
-    GPLv3; trimmed down version with minor changes)
+- `tri v0.3.1.dev0` (ported to Python 3; MIT)
+- `optimesh v0.6.2` (last version with MIT - later versions are GPLv3; trimmed
+  down version with minor changes)
+- `meshplex v0.12.3` (last version with MIT - later versions are GPLv3; trimmed
+    down version with minor changes)
 
