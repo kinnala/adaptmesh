@@ -1,9 +1,5 @@
-import logging
-import random
 import time
 import warnings
-from collections import defaultdict
-from datetime import datetime
 from itertools import chain
 from math import ceil, cos, hypot, pi, sin, sqrt
 from operator import itemgetter

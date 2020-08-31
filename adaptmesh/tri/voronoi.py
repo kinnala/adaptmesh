@@ -3,8 +3,7 @@ from topomap.loopfactory import find_loops
 from topomap.topomap import TopoMap
 
 from . import ToPointsAndSegments, triangulate
-from .delaunay import (InteriorTriangleIterator, RegionatedTriangleIterator,
-                       TriangleIterator, ccw, output_triangles)
+from .delaunay import TriangleIterator, ccw, output_triangles
 
 # from splitarea.flagging import MidpointHarvester
 # from splitarea.densify import densify
@@ -135,15 +134,8 @@ def main():
         for face in tm.faces.itervalues():
             try:
                 fh.write("{0}\n".format(face.multigeometry()[0]))
-            except:
+            except Exception as _:
                 pass
-
-    #     visitor = MidpointHarvester([t for t in InteriorTriangleIterator(dt)])
-    #     visitor.skeleton_segments()
-    #     with open("/tmp/skel.wkt", "w") as fh:
-    #         fh.write("wkt\n")
-    #         for seg in visitor.segments:
-    #             fh.write("LINESTRING({0[0].x} {0[0].y}, {0[1].x} {0[1].y})\n".format(seg))
 
     with open("/tmp/inside.wkt", "w") as fh:
         output_triangles([t for t in TriangleIterator(dt)], fh)
