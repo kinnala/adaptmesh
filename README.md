@@ -2,6 +2,12 @@
 
 Create triangular meshes by harnessing the power of the adaptive process.
 
+## Installation
+
+```
+pip install adaptmesh
+```
+
 ## Examples
 
 ### Square with default settings
