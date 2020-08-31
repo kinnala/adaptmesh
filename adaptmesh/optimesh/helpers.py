@@ -19,7 +19,6 @@ def runner(
 
     if verbose:
         print("\nBefore:")
-        print_stats(mesh)
     if step_filename_format:
         mesh.save(
             step_filename_format.format(k),
@@ -93,7 +92,6 @@ def runner(
 
                 if verbose:
                     print("\nFinal ({}):".format(info))
-                    print_stats(mesh)
             if step_filename_format:
                 mesh.save(
                     step_filename_format.format(k),

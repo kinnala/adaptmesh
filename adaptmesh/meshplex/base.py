@@ -157,30 +157,7 @@ class _base_mesh:
         self._edge_lengths = None
 
     def write(self, filename, point_data=None, cell_data=None, field_data=None):
-        if self.node_coords.shape[1] == 2:
-            n = len(self.node_coords)
-            a = numpy.ascontiguousarray(
-                numpy.column_stack([self.node_coords, numpy.zeros(n)])
-            )
-        else:
-            a = self.node_coords
-
-        if self.cells["nodes"].shape[1] == 3:
-            cell_type = "triangle"
-        else:
-            assert (
-                self.cells["nodes"].shape[1] == 4
-            ), "Only triangles/tetrahedra supported"
-            cell_type = "tetra"
-
-        # meshio.write_points_cells(
-        #     filename,
-        #     a,
-        #     {cell_type: self.cells["nodes"]},
-        #     point_data=point_data,
-        #     cell_data=cell_data,
-        #     field_data=field_data,
-        # )
+        pass
 
     @property
     def edge_lengths(self):

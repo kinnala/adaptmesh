@@ -472,7 +472,7 @@ class MeshTri(_base_mesh):
 
     @property
     def cell_centroids(self):
-        """The centroids (barycenters, midpoints of the circumcircles) of all triangles."""
+        """The centroids of all triangles."""
         if self._cell_centroids is None:
             self._cell_centroids = (
                 numpy.sum(self.node_coords[self.cells["nodes"]], axis=1) / 3.0

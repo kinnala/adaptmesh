@@ -625,10 +625,8 @@ def triangulate(points, infos=None, segments=None):
 
     # insert segments
     if segments is not None:
-        start = time.process_time()
         constraints = ConstraintInserter(dt)
         constraints.insert(segments)
-        end = time.process_time()
         constraints = len([_ for _ in FiniteEdgeIterator(dt, constraints_only=True)])
     # insert information for vertices
     if infos is not None:
@@ -889,8 +887,8 @@ class PointInserter(object):
         assert t0.vertices[orig0] is t1.vertices[dest1]
         assert t0.vertices[dest0] is t1.vertices[orig1]
         # assert both triangles have this edge unconstrained
-        assert t0.constrained[apex0] == False
-        assert t1.constrained[apex1] == False
+        assert not t0.constrained[apex0]
+        assert not t1.constrained[apex1]
 
         # -- vertices around quadrilateral in ccw order starting at apex of t0
         A, B, C, D = (
@@ -1034,8 +1032,8 @@ def mark_cavity(P, Q, triangles):
         pidx = t.vertices.index(P)
         lidx = (pidx + 1) % 3
         ridx = (pidx + 2) % 3
-        l = t.vertices[lidx]
-        assert l is Q
+        point_l = t.vertices[lidx]
+        assert point_l is Q
         below = []
         for i in (ridx,):
             n = t.neighbours[i]
@@ -1112,13 +1110,6 @@ def straight_walk(P, Q):
         ):
             raise TopologyViolationError("Unwanted vertex collision detected")
 
-        # based on the position of R take next triangle
-        # FIXME:
-        # TEST THIS: check here if taking the neighbour does not take
-        # place over a constrained side of the triangle -->
-        # raise ValueError("Unwanted constrained segment collision detected")
-        #         if triangle.getEdgeType(side):
-        #             raise TopologyViolationError("Unwanted constrained segment collision detected")
         if t.constrained[side]:
             raise TopologyViolationError(
                 "Unwanted constrained segment collision detected"
@@ -1193,7 +1184,6 @@ class ConstraintInserter(object):
             ),
             self.triangulation.triangles,
         )
-        # logging.debug( str( len(self.triangulation.triangles) ) + " (before) versus " + str( len(new) ) + " (after) triangle clean up" )
         self.triangulation.triangles = new
 
     def insert_constraint(self, P, Q):
@@ -1674,23 +1664,6 @@ def test_incremental():
         output_vertices(tds.vertices, fh)
 
 
-def test_cpo():
-    # i = 1, j = 100 -> worst case, all end up as 1 point in slot
-    # --> would be better to switch then to other order
-    points = []
-    idx = 0
-    for i in range(400):
-        for j in range(400):
-            points.append((i, j, None, idx))
-            idx += 1
-    points_hcpo = hcpo(points)
-    assert len(points) == len(points_hcpo)
-    with open("/tmp/points.txt", "w") as fh:
-        print >> fh, "i;wkt"
-        for i, pt in enumerate(points_hcpo):
-            print >> fh, i, ";POINT({0[0]} {0[1]})".format(pt)
-
-
 def test_square():
     triangulate(
         [(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0)],
@@ -1782,8 +1755,10 @@ def test_poly():
         return points, segments
 
     lines = []
-    sql = "select geometry from clc_edge where left_face_id in (45347) or right_face_id in (45347)"
-    sql = "select geometry from clc_edge where left_face_id in (45270) or right_face_id in (45270)"
+    sql = ("select geometry from clc_edge where "
+           "left_face_id in (45347) or right_face_id in (45347)")
+    sql = ("select geometry from clc_edge where "
+           "left_face_id in (45270) or right_face_id in (45270)")
     for (geom,) in db.recordset(sql):
         lines.append(geom)
     points, segments = polygon_input(lines)
