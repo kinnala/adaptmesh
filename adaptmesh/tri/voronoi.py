@@ -134,7 +134,7 @@ def main():
         for face in tm.faces.itervalues():
             try:
                 fh.write("{0}\n".format(face.multigeometry()[0]))
-            except Exception as _:
+            except Exception:
                 pass
 
     with open("/tmp/inside.wkt", "w") as fh:

@@ -116,12 +116,12 @@ class TriangleIterator(object):
             triangle = self.to_visit_stack.pop()
             # determine whether we should 'emit' the triangle
             if (
-                self.finite_only == True
+                self.finite_only
                 and id(triangle) not in self.visited
                 and triangle.is_finite
             ):
                 ret = triangle
-            elif self.finite_only == False and id(triangle) not in self.visited:
+            elif not self.finite_only and id(triangle) not in self.visited:
                 ret = triangle
             self.visited.add(id(triangle))
             # NOTE: from an external triangle we can get
@@ -538,14 +538,13 @@ class Triangle(object):
                 dx /= d
                 dy = dest.y - orig.y
                 dy /= d
-                O = halfway[0] + dy, halfway[1] - dx
-                vertices.append("{0[0]} {0[1]}".format(O))
+                off = halfway[0] + dy, halfway[1] - dx
+                vertices.append("{0[0]} {0[1]}".format(off))
         vertices.append(vertices[0])
         return "POLYGON(({0}))".format(", ".join(vertices))
 
     @property
     def is_finite(self):
-        #         return self.vertices[2] is not None
         return not any([isinstance(v, InfiniteVertex) for v in self.vertices])
 
     @property
@@ -561,9 +560,6 @@ class Edge(object):
         self.triangle = triangle
         self.side = side
 
-    #     def __str__(self):
-    #         return "{}={}={}".format(self.side, ", ".join(map(str, self.segment)), self.triangle)
-
     @property
     def segment(self):
         return (
@@ -574,13 +570,6 @@ class Edge(object):
     @property
     def constrained(self):
         return self.triangle.constrained[self.side]
-
-
-#     @property
-#     def is_finite(self):
-#         # FIXME:
-#         # not use triangle here, but check if vertices are finite or infinite
-#         return self.triangle.is_finite
 
 
 class Triangulation(object):
@@ -627,46 +616,24 @@ def triangulate(points, infos=None, segments=None):
         if infos is not None:
             infos = [(index_translation[info[0]], info[1]) for info in infos]
     end = time.process_time()
-    # logging.debug( str(end - start) + " secs" )
-    # logging.debug( "" )
-    # logging.debug( "triangulating " + str(len(points)) + " points" )
     # add points, using incremental construction triangulation builder
     dt = Triangulation()
     start = time.process_time()
     incremental = PointInserter(dt)
     incremental.insert(points)
     end = time.process_time()
-    # logging.debug( str(end - start) + " secs")
-    # logging.debug( str(len(dt.vertices)) + " vertices")
-    # logging.debug( str(len(dt.triangles)) + " triangles")
-    # logging.debug( str(incremental.flips) + " flips")
-    #     if len(dt.vertices) > 0:
-    #         logging.debug( str( float(incremental.flips) / len(dt.vertices)) + " flips per insert")
-
-    # check links of triangles
-    #     check_consistency(dt.triangles)
 
     # insert segments
     if segments is not None:
         start = time.process_time()
-        # logging.debug( "" )
-        # logging.debug( "inserting " + str(len(segments)) + " constraints")
         constraints = ConstraintInserter(dt)
         constraints.insert(segments)
         end = time.process_time()
-        # logging.debug( str(end - start) + " secs")
-        # logging.debug( str(len(dt.vertices)) + " vertices")
-        # logging.debug( str(len(dt.triangles)) + " triangles")
         constraints = len([_ for _ in FiniteEdgeIterator(dt, constraints_only=True)])
-        # logging.debug( str(constraints) + " constraints")
     # insert information for vertices
     if infos is not None:
-        # logging.debug( "" )
-        # logging.debug( "inserting " + str( len(infos) ) + " info")
         for info in infos:
             dt.vertices[info[0]].info = info[1]
-    # logging.debug( "" )
-    # logging.debug( "fin " + str(datetime.now()) )
     if False:
         with open("/tmp/alltris.wkt", "w") as fh:
             output_triangles([t for t in TriangleIterator(dt, finite_only=False)], fh)
@@ -1636,32 +1603,11 @@ def hcpo(points, sr=0.75, minsz=10):
     where the points are randomly ordered, but then sorted with enough spatial
     coherence to be useful to not get worst case flipping behaviour
     """
-    # Build a new list with points, ordered along hierarchical curve
-    # with levels
     if len(points) == 0:
         raise ValueError("not enough points")
     out = []
     _hcpo(points, out, sr, minsz)
     return out
-
-
-# def show_circ():
-#     print "circle ccw"
-#     for i in range(3):
-#         print "", i, "next", ccw(i)
-#     print "circle cw"
-#     for i in range(2, -1, -1):
-#         print "", i, "prev", cw(i)
-#
-# def out(v):
-#     with open("/tmp/vertices.wkt", "w") as fh:
-#         print >> fh, "x;y"
-#         print >> fh, "\n".join(["{x};{y}".format(x=x,y=y) for (x,y) in v])
-
-
-# ------------------------------------------------------------------------------
-# Generate randomized point sets (for testing purposes)
-#
 
 
 def random_sorted_vertices(n=10):
@@ -1739,10 +1685,6 @@ def test_cpo():
             idx += 1
     points_hcpo = hcpo(points)
     assert len(points) == len(points_hcpo)
-    # print points
-    # build a translation table for indices in the points list
-    #     index_translation = dict([(newpos, pos) for (newpos, (_, _, _, pos)) in enumerate(points_hcpo)])
-    # print index_translation
     with open("/tmp/points.txt", "w") as fh:
         print >> fh, "i;wkt"
         for i, pt in enumerate(points_hcpo):
@@ -1781,7 +1723,7 @@ class ToPointsAndSegments(object):
         Note that if a point already is present,
         it is not appended nor is its info added to the infos list.
         """
-        if point not in self._points_idx:  # e.g., point: POINT(3559000.0 5903000.0)
+        if point not in self._points_idx:
             idx = len(self.points)
             self._points_idx[point] = idx
             self.points.append(point)
@@ -1804,8 +1746,7 @@ class ToPointsAndSegments(object):
             segs = []
             for pt in line:  # e.g. pt: POINT(3558500.0 5900000.0)
                 self.add_point(pt)
-            for i, j in zip(range(0, len(line) - 1), xrange(1, len(line))):
-                # e.g., line[i], line[j]: POINT(3558500.0 5900000.0) POINT(3560000.0 5901000.0)
+            for i, j in zip(range(0, len(line) - 1), range(1, len(line))):
                 segs.append(self.add_segment(line[i], line[j]))
             segs_lt.append(segs)
         return segs_lt
@@ -1814,8 +1755,7 @@ class ToPointsAndSegments(object):
         segs = []
         for pt in line:  # e.g. pt: POINT(3558500.0 5900000.0)
             self.add_point(pt)
-        for i, j in zip(range(0, len(line) - 1), xrange(1, len(line))):
-            # e.g., line[i], line[j]: POINT(3558500.0 5900000.0) POINT(3560000.0 5901000.0)
+        for i, j in zip(range(0, len(line) - 1), range(1, len(line))):
             segs.append(self.add_segment(line[i], line[j]))
         return segs
 
@@ -1843,8 +1783,6 @@ def test_poly():
 
     lines = []
     sql = "select geometry from clc_edge where left_face_id in (45347) or right_face_id in (45347)"
-    # sql = 'select geometry from clc_edge where left_face_id in (28875) or right_face_id in (28875)'
-    # 45270
     sql = "select geometry from clc_edge where left_face_id in (45270) or right_face_id in (45270)"
     for (geom,) in db.recordset(sql):
         lines.append(geom)
@@ -1861,14 +1799,13 @@ def test_poly():
         with open("/tmp/segments.wkt", "w") as fh:
             fh.write("wkt\n")
             for segment in trafo.segments:
-                # FIXME: why are some not coming through?
                 try:
                     fh.write(
                         "LINESTRING({0[0]} {0[1]}, {1[0]} {1[1]})\n".format(
                             trafo.centers[segment[0]], trafo.centers[segment[1]]
                         )
                     )
-                except:
+                except Exception:
                     pass
     if True:
         with open("/tmp/alltris.wkt", "w") as fh:
@@ -1880,15 +1817,6 @@ def test_poly():
 
 
 def test_small():
-    #     pts = [(3421275.7657, 3198467.4977),
-    #            (3421172.5598, 3198197.546)
-    #            ]
-    #     triangulate(pts)
-    # triangulate([(0,0), (0, -1)])
-    # triangulate([(0,0)])
-    #     buggy = [(-120,90),(-60,40), (0,0),]# (-45, 35)]
-    #     triangulate(buggy)
-    #     triangulate([(0,0), (0,-20)])
     triangulate(
         [
             (0, 0),
@@ -1902,22 +1830,6 @@ def test_small():
             (-45, 35),
         ]
     )
-    # triangulate([(0,0), (-10, 6)])
-
-
-#     triangulate([(0,0), (0, -6)])
 
 if __name__ == "__main__":
-    #     test_small()
     test_poly()
-#     test_square()
-#     test_circle()
-#     test_incremental()
-
-#     test_cpo()
-#     test_flip()
-#    test_sorted()
-#     test_tds()
-#    test_sorted()
-#     main()
-#     test_link()
