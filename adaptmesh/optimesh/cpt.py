@@ -82,8 +82,10 @@ def fixed_point_uniform(points, cells, *args, **kwargs):
         mesh,
         *args,
         **kwargs,
-        method_name=("Centroidal Patch Tesselation (CPT), uniform density, "
-                     "fixed-point variant")
+        method_name=(
+            "Centroidal Patch Tesselation (CPT), uniform density, "
+            "fixed-point variant"
+        )
     )
     return mesh.node_coords, mesh.cells["nodes"]
 
@@ -226,7 +228,9 @@ def quasi_newton_uniform(points, cells, *args, **kwargs):
         mesh,
         *args,
         **kwargs,
-        method_name=("Centroidal Patch Tesselation (CPT), uniform density, "
-                     "quasi-Newton variant")
+        method_name=(
+            "Centroidal Patch Tesselation (CPT), uniform density, "
+            "quasi-Newton variant"
+        )
     )
     return mesh.node_coords, mesh.cells["nodes"]

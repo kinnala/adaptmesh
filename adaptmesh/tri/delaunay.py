@@ -1,4 +1,3 @@
-import time
 import warnings
 from itertools import chain
 from math import ceil, cos, hypot, pi, sin, sqrt
@@ -596,7 +595,6 @@ def triangulate(points, infos=None, segments=None):
     # logging.debug( "start "+ str(datetime.now()) )
     # logging.debug( "" )
     # logging.debug( "pre-processing" )
-    start = time.process_time()
     # points without info
     points = [(pt[0], pt[1], key) for key, pt in enumerate(points)]
     # this randomizes the points and then sorts them for spatial coherence
@@ -615,13 +613,10 @@ def triangulate(points, infos=None, segments=None):
             ]
         if infos is not None:
             infos = [(index_translation[info[0]], info[1]) for info in infos]
-    end = time.process_time()
     # add points, using incremental construction triangulation builder
     dt = Triangulation()
-    start = time.process_time()
     incremental = PointInserter(dt)
     incremental.insert(points)
-    end = time.process_time()
 
     # insert segments
     if segments is not None:
@@ -1119,9 +1114,9 @@ def straight_walk(P, Q):
 
         side = t.vertices.index(R)
         S = t.vertices[ccw(side)]
-        O = orient2d(S, Q, P)
+        orientation = orient2d(S, Q, P)
         #
-        if O < 0:
+        if orientation < 0:
             L = S
             side = ccw(side + 1)
         else:
@@ -1755,10 +1750,14 @@ def test_poly():
         return points, segments
 
     lines = []
-    sql = ("select geometry from clc_edge where "
-           "left_face_id in (45347) or right_face_id in (45347)")
-    sql = ("select geometry from clc_edge where "
-           "left_face_id in (45270) or right_face_id in (45270)")
+    sql = (
+        "select geometry from clc_edge where "
+        "left_face_id in (45347) or right_face_id in (45347)"
+    )
+    sql = (
+        "select geometry from clc_edge where "
+        "left_face_id in (45270) or right_face_id in (45270)"
+    )
     for (geom,) in db.recordset(sql):
         lines.append(geom)
     points, segments = polygon_input(lines)
@@ -1805,6 +1804,7 @@ def test_small():
             (-45, 35),
         ]
     )
+
 
 if __name__ == "__main__":
     test_poly()
