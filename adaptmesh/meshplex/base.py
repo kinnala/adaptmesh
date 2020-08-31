@@ -1,8 +1,9 @@
 import numpy
 
+from .exceptions import MeshplexError
+
 # import meshio
 
-from .exceptions import MeshplexError
 
 __all__ = []
 

@@ -1,21 +1,19 @@
-from math import hypot, sqrt, ceil, pi, sin, cos
-from random import random, randint
-import warnings
-from operator import itemgetter
-import time
-from random import shuffle
-from itertools import chain
-from datetime import datetime
-from collections import defaultdict
 import logging
 import random
-
+import time
+import warnings
+from collections import defaultdict
+from datetime import datetime
+from itertools import chain
+from math import ceil, cos, hypot, pi, sin, sqrt
+from operator import itemgetter
+from random import randint, random, shuffle
 
 random.seed(0)
 
 
 try:
-    from geompreds import orient2d, incircle
+    from geompreds import incircle, orient2d
 except ImportError:
     warnings.warn(
         "Robust predicates not available, falling back on non-robust implementation"

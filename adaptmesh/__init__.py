@@ -4,12 +4,12 @@ from .process import process
 def triangulate(
     corner_points, max_refloops=10, theta=0.8, smooth_steps=50, quality=0.9
 ):
+    from .criterion import avg_quality
     from .initial import cdt
-    from .solve import laplace
     from .mark import adaptive_theta
     from .refine import rgb
     from .smooth import cpt
-    from .criterion import avg_quality
+    from .solve import laplace
 
     return process(
         initial=cdt,

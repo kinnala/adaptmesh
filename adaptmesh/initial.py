@@ -1,9 +1,10 @@
 """Creation of initial meshes."""
 
 
-import numpy as np
 import matplotlib.path as mpltPath
+import numpy as np
 from skfem import MeshTri
+
 from .tri import ToPointsAndSegments, triangulate
 
 

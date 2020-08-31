@@ -2,6 +2,7 @@
 
 
 from skfem import MeshTri
+
 from .optimesh.cpt import fixed_point_uniform
 
 

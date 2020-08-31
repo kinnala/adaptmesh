@@ -13,7 +13,6 @@ import numpy
 import scipy.sparse.linalg
 
 from ..meshplex.mesh_tri import MeshTri
-
 from .helpers import get_new_points_volume_averaged, runner
 
 

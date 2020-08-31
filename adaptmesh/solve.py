@@ -2,9 +2,11 @@
 
 
 import numpy as np
-from skfem import ElementTriP1, InteriorBasis, FacetBasis, Functional, solve, condense
-from skfem.models.poisson import laplace as laplacian, unit_load
+from skfem import (ElementTriP1, FacetBasis, Functional, InteriorBasis,
+                   condense, solve)
 from skfem.helpers import grad
+from skfem.models.poisson import laplace as laplacian
+from skfem.models.poisson import unit_load
 
 
 def laplace(m, **params):

@@ -1,11 +1,10 @@
 from simplegeom.geometry import LineString
-
-from topomap.topomap import TopoMap
 from topomap.loopfactory import find_loops
+from topomap.topomap import TopoMap
 
 from tri import ToPointsAndSegments, triangulate
-from tri.delaunay import output_triangles, TriangleIterator, InteriorTriangleIterator
-from tri.delaunay import RegionatedTriangleIterator, ccw
+from tri.delaunay import (InteriorTriangleIterator, RegionatedTriangleIterator,
+                          TriangleIterator, ccw, output_triangles)
 
 # from splitarea.flagging import MidpointHarvester
 # from splitarea.densify import densify
@@ -90,7 +89,6 @@ def main():
     #                           #[(2,2), (8,2), (6,4), (5,7), (2,2)]
     #                           ],
     #                          )
-
     # FIXME: does not work with this dataset yet, as the vertex density is not
     # high enough: should add more vertices (densify)
     with open("/home/martijn/workspace/splitarea/data/sandro/poly.geojson") as fh:
