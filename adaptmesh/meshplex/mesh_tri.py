@@ -2,8 +2,12 @@ import os
 
 import numpy
 
-from .base import (_base_mesh, compute_ce_ratios, compute_tri_areas,
-                   compute_triangle_circumcenters)
+from .base import (
+    _base_mesh,
+    compute_ce_ratios,
+    compute_tri_areas,
+    compute_triangle_circumcenters,
+)
 from .helpers import grp_start_len, unique_rows
 
 __all__ = ["MeshTri"]
