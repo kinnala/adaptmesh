@@ -2,7 +2,14 @@
 
 
 import numpy as np
-from skfem import ElementTriP1, FacetBasis, Functional, InteriorBasis, condense, solve
+from skfem import (
+    ElementTriP1,
+    FacetBasis,
+    Functional,
+    InteriorBasis,
+    condense,
+    solve,
+)
 from skfem.helpers import grad
 from skfem.models.poisson import laplace as laplacian
 from skfem.models.poisson import unit_load
