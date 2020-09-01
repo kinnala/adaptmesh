@@ -26,7 +26,7 @@ jobs:
         pytest
     - name: Lint with isort
       run: |
-        isort -m 3 --tc --check .
+        isort --check .
     - name: Lint with flake8
       run: |
         flake8 .

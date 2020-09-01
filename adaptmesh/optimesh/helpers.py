@@ -87,7 +87,9 @@ def runner(
                 info = "{} steps".format(k)
                 if method_name is not None:
                     if abs(omega - 1.0) > 1.0e-10:
-                        method_name += ", relaxation parameter {}".format(omega)
+                        method_name += ", relaxation parameter {}".format(
+                            omega
+                        )
                     info += " of " + method_name
 
                 if verbose:
@@ -137,7 +139,10 @@ def get_new_points_count_averaged(mesh, reference_points):
     new_points = numpy.zeros(mesh.node_coords.shape)
     for i in mesh.cells["nodes"].T:
         new_points += numpy.array(
-            [numpy.bincount(i, vals, minlength=n) for vals in reference_points.T]
+            [
+                numpy.bincount(i, vals, minlength=n)
+                for vals in reference_points.T
+            ]
         ).T
 
     omega = numpy.bincount(mesh.cells["nodes"].reshape(-1), minlength=n)

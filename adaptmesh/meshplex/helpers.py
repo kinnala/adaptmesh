@@ -32,6 +32,8 @@ def unique_rows(a):
     b = numpy.ascontiguousarray(a).view(
         numpy.dtype((numpy.void, a.dtype.itemsize * a.shape[1]))
     )
-    a_unique, inv, cts = numpy.unique(b, return_inverse=True, return_counts=True)
+    a_unique, inv, cts = numpy.unique(
+        b, return_inverse=True, return_counts=True
+    )
     a_unique = a_unique.view(a.dtype).reshape(-1, a.shape[1])
     return a_unique, inv, cts

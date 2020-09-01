@@ -62,7 +62,11 @@ def linear_solve_density_preserving(points, cells, *args, **kwargs):
 
     mesh = MeshTri(points, cells)
     runner(
-        get_new_points, mesh, *args, **kwargs, method_name="exact Laplacian smoothing"
+        get_new_points,
+        mesh,
+        *args,
+        **kwargs,
+        method_name="exact Laplacian smoothing"
     )
     return mesh.node_coords, mesh.cells["nodes"]
 
@@ -108,7 +112,9 @@ def jac_uniform(X, cells):
     jac = numpy.zeros(X.shape)
     for k in range(mesh.cells["nodes"].shape[1]):
         i = mesh.cells["nodes"][:, k]
-        vals = (mesh.node_coords[i] - mesh.cell_barycenters).T * mesh.cell_volumes
+        vals = (
+            mesh.node_coords[i] - mesh.cell_barycenters
+        ).T * mesh.cell_volumes
         # numpy.add.at(jac, i, vals)
         jac += numpy.array(
             [numpy.bincount(i, val, minlength=jac.shape[0]) for val in vals]

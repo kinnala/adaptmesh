@@ -29,9 +29,9 @@ class MeshTri(_base_mesh):
             cells = numpy.sort(cells, axis=1)
             cells = cells[cells[:, 0].argsort()]
 
-        assert len(nodes.shape) == 2, "Illegal node coordinates shape {}".format(
-            nodes.shape
-        )
+        assert (
+            len(nodes.shape) == 2
+        ), "Illegal node coordinates shape {}".format(nodes.shape)
         assert (
             len(cells.shape) == 2 and cells.shape[1] == 3
         ), "Illegal cells shape {}".format(cells.shape)
@@ -91,7 +91,8 @@ class MeshTri(_base_mesh):
         #    [[(1, 1), (0, 2)], [(0, 0), (1, 2)], [(1, 0), (0, 1)]]
         #
         self.local_idx_inv = [
-            [tuple(i) for i in zip(*numpy.where(self.local_idx == k))] for k in range(3)
+            [tuple(i) for i in zip(*numpy.where(self.local_idx == k))]
+            for k in range(3)
         ]
 
         # Create the corresponding edge coordinates.
@@ -142,7 +143,9 @@ class MeshTri(_base_mesh):
     @property
     def ce_ratios(self):
         if self._ce_ratios is None:
-            self._ce_ratios = compute_ce_ratios(self.ei_dot_ej, self.cell_volumes)
+            self._ce_ratios = compute_ce_ratios(
+                self.ei_dot_ej, self.cell_volumes
+            )
         return self._ce_ratios
 
     def update_values(self):
@@ -168,7 +171,9 @@ class MeshTri(_base_mesh):
 
         if self.cell_volumes is not None or self.ce_ratios is not None:
             self.cell_volumes = compute_tri_areas(self.ei_dot_ej)
-            self._ce_ratios = compute_ce_ratios(self.ei_dot_ej, self.cell_volumes)
+            self._ce_ratios = compute_ce_ratios(
+                self.ei_dot_ej, self.cell_volumes
+            )
 
         self._interior_edge_lengths = None
         self._cell_circumcenters = None
@@ -196,7 +201,9 @@ class MeshTri(_base_mesh):
                 minlength=n,
             )
 
-            self._interior_ce_ratios = ce_ratios[~self.is_boundary_edge_individual]
+            self._interior_ce_ratios = ce_ratios[
+                ~self.is_boundary_edge_individual
+            ]
 
             # # sum up from self.ce_ratios
             # if self._edges_cells is None:
@@ -223,7 +230,9 @@ class MeshTri(_base_mesh):
         if cell_mask is None:
             cell_mask = numpy.zeros(self.cell_partitions.shape[1], dtype=bool)
 
-        if self._control_volumes is None or numpy.any(cell_mask != self._cv_cell_mask):
+        if self._control_volumes is None or numpy.any(
+            cell_mask != self._cv_cell_mask
+        ):
             # Summing up the arrays first makes the work on bincount a bit lighter.
             v = self.cell_partitions[:, ~cell_mask]
             vals = numpy.array([v[1] + v[2], v[2] + v[0], v[0] + v[1]])
@@ -266,7 +275,9 @@ class MeshTri(_base_mesh):
         if cell_mask is None:
             cell_mask = numpy.zeros(self.cell_partitions.shape[1], dtype=bool)
 
-        if self._cv_centroids is None or numpy.any(cell_mask != self._cvc_cell_mask):
+        if self._cv_centroids is None or numpy.any(
+            cell_mask != self._cvc_cell_mask
+        ):
             _, v = self._compute_integral_x()
             v = v[:, :, ~cell_mask, :]
 
@@ -288,7 +299,9 @@ class MeshTri(_base_mesh):
             ).T
 
             # Divide by the control volume
-            self._cv_centroids /= self.get_control_volumes(cell_mask=cell_mask)[:, None]
+            self._cv_centroids /= self.get_control_volumes(
+                cell_mask=cell_mask
+            )[:, None]
             self._cvc_cell_mask = cell_mask
             assert numpy.all(cell_mask == self._cv_cell_mask)
 
@@ -326,7 +339,9 @@ class MeshTri(_base_mesh):
         assert self.is_boundary_edge is not None
 
         self._is_boundary_node = numpy.zeros(len(self.node_coords), dtype=bool)
-        self._is_boundary_node[self.idx_hierarchy[..., self.is_boundary_edge]] = True
+        self._is_boundary_node[
+            self.idx_hierarchy[..., self.is_boundary_edge]
+        ] = True
 
         self._is_interior_node = self.node_is_used & ~self.is_boundary_node
 
@@ -403,7 +418,9 @@ class MeshTri(_base_mesh):
 
         num_edges = len(self.edges["nodes"])
 
-        count = numpy.bincount(self.cells["edges"].reshape(-1), minlength=num_edges)
+        count = numpy.bincount(
+            self.cells["edges"].reshape(-1), minlength=num_edges
+        )
 
         # <https://stackoverflow.com/a/50395231/353337>
         edges_flat = self.cells["edges"].flat
@@ -494,7 +511,9 @@ class MeshTri(_base_mesh):
         # https://en.wikipedia.org/wiki/Incenter#Barycentric_coordinates
         abc = numpy.sqrt(self.ei_dot_ei)
         abc /= numpy.sum(abc, axis=0)
-        return numpy.einsum("ij,jik->jk", abc, self.node_coords[self.cells["nodes"]])
+        return numpy.einsum(
+            "ij,jik->jk", abc, self.node_coords[self.cells["nodes"]]
+        )
 
     @property
     def cell_inradius(self):
@@ -850,7 +869,9 @@ class MeshTri(_base_mesh):
             line_segments0 = LineCollection(e[is_pos], color=mesh_color)
             ax.add_collection(line_segments0)
             #
-            line_segments1 = LineCollection(e[~is_pos], color=nondelaunay_edge_color)
+            line_segments1 = LineCollection(
+                e[~is_pos], color=nondelaunay_edge_color
+            )
             ax.add_collection(line_segments1)
 
         if show_coedges:
@@ -865,13 +886,16 @@ class MeshTri(_base_mesh):
             # Plot connection of the circumcenter to the midpoint of all three
             # axes.
             a = numpy.stack(
-                [cc[:, :2], edge_midpoints[self.cells["edges"][:, 0], :2]], axis=1
+                [cc[:, :2], edge_midpoints[self.cells["edges"][:, 0], :2]],
+                axis=1,
             )
             b = numpy.stack(
-                [cc[:, :2], edge_midpoints[self.cells["edges"][:, 1], :2]], axis=1
+                [cc[:, :2], edge_midpoints[self.cells["edges"][:, 1], :2]],
+                axis=1,
             )
             c = numpy.stack(
-                [cc[:, :2], edge_midpoints[self.cells["edges"][:, 2], :2]], axis=1
+                [cc[:, :2], edge_midpoints[self.cells["edges"][:, 2], :2]],
+                axis=1,
             )
 
             line_segments = LineCollection(
@@ -880,9 +904,9 @@ class MeshTri(_base_mesh):
             ax.add_collection(line_segments)
 
         if boundary_edge_color:
-            e = self.node_coords[self.edges["nodes"][self.is_boundary_edge_individual]][
-                :, :, :2
-            ]
+            e = self.node_coords[
+                self.edges["nodes"][self.is_boundary_edge_individual]
+            ][:, :, :2]
             line_segments1 = LineCollection(e, color=boundary_edge_color)
             ax.add_collection(line_segments1)
 
@@ -900,7 +924,9 @@ class MeshTri(_base_mesh):
                     centroid[0],
                     centroid[1],
                     str(k),
-                    bbox=dict(facecolor=control_volume_centroid_color, alpha=0.7),
+                    bbox=dict(
+                        facecolor=control_volume_centroid_color, alpha=0.7
+                    ),
                     horizontalalignment="center",
                     verticalalignment="center",
                 )
@@ -936,7 +962,9 @@ class MeshTri(_base_mesh):
             self.create_edges()
 
         # Find the edges that contain the vertex
-        edge_gids = numpy.where((self.edges["nodes"] == node_id).any(axis=1))[0]
+        edge_gids = numpy.where((self.edges["nodes"] == node_id).any(axis=1))[
+            0
+        ]
         # ... and plot them
         for node_ids in self.edges["nodes"][edge_gids]:
             x = self.node_coords[node_ids]
@@ -951,7 +979,9 @@ class MeshTri(_base_mesh):
                 )
 
             # Find the cells that contain the vertex
-            cell_ids = numpy.where((self.cells["nodes"] == node_id).any(axis=1))[0]
+            cell_ids = numpy.where(
+                (self.cells["nodes"] == node_id).any(axis=1)
+            )[0]
 
             for cell_id in cell_ids:
                 for edge_gid in self.cells["edges"][cell_id]:
@@ -959,10 +989,12 @@ class MeshTri(_base_mesh):
                         continue
                     node_ids = self.edges["nodes"][edge_gid]
                     edge_midpoint = 0.5 * (
-                        self.node_coords[node_ids[0]] + self.node_coords[node_ids[1]]
+                        self.node_coords[node_ids[0]]
+                        + self.node_coords[node_ids[1]]
                     )
                     p = numpy.stack(
-                        [self.cell_circumcenters[cell_id], edge_midpoint], axis=1
+                        [self.cell_circumcenters[cell_id], edge_midpoint],
+                        axis=1,
                     )
                     q = numpy.column_stack(
                         [
@@ -1003,12 +1035,16 @@ class MeshTri(_base_mesh):
             # Check if there are cells for which more than one edge needs to be flipped.
             # For those, only flip one edge, namely that with the smaller (more
             # negative) ce_ratio.
-            cell_gids, num_flips_per_cell = numpy.unique(adj_cells, return_counts=True)
+            cell_gids, num_flips_per_cell = numpy.unique(
+                adj_cells, return_counts=True
+            )
             critical_cell_gids = cell_gids[num_flips_per_cell > 1]
             while numpy.any(num_flips_per_cell > 1):
                 for cell_gid in critical_cell_gids:
                     edge_gids = self.cells["edges"][cell_gid]
-                    num_adj_cells, edge_id = self._edge_gid_to_edge_list[edge_gids].T
+                    num_adj_cells, edge_id = self._edge_gid_to_edge_list[
+                        edge_gids
+                    ].T
                     edge_ids = edge_id[num_adj_cells == 2]
                     k = numpy.argmin(ce_ratios_per_interior_edge[edge_ids])
                     is_flip_interior_edge[edge_ids] = False
@@ -1112,7 +1148,9 @@ class MeshTri(_base_mesh):
 
         # update is_boundary_edge
         for k in range(3):
-            self.is_boundary_edge[k, adj_cells] = self.is_boundary_edge_individual[
+            self.is_boundary_edge[
+                k, adj_cells
+            ] = self.is_boundary_edge_individual[
                 self.cells["edges"][adj_cells, k]
             ]
 
@@ -1132,17 +1170,27 @@ class MeshTri(_base_mesh):
 
             # outer boundary edges
             edge_id1 = edge_id[k1]
-            assert numpy.all(self._edges_cells[1][edge_id1][:, 0] == adj_cells[c, k1])
+            assert numpy.all(
+                self._edges_cells[1][edge_id1][:, 0] == adj_cells[c, k1]
+            )
             self._edges_cells[1][edge_id1, 0] = adj_cells[d, k1]
 
             # interior edges
             edge_id2 = edge_id[k2]
-            is_column0 = self._edges_cells[2][edge_id2][:, 0] == adj_cells[c, k2]
-            is_column1 = self._edges_cells[2][edge_id2][:, 1] == adj_cells[c, k2]
+            is_column0 = (
+                self._edges_cells[2][edge_id2][:, 0] == adj_cells[c, k2]
+            )
+            is_column1 = (
+                self._edges_cells[2][edge_id2][:, 1] == adj_cells[c, k2]
+            )
             assert numpy.all(numpy.logical_xor(is_column0, is_column1))
             #
-            self._edges_cells[2][edge_id2[is_column0], 0] = adj_cells[d, k2][is_column0]
-            self._edges_cells[2][edge_id2[is_column1], 1] = adj_cells[d, k2][is_column1]
+            self._edges_cells[2][edge_id2[is_column0], 0] = adj_cells[d, k2][
+                is_column0
+            ]
+            self._edges_cells[2][edge_id2[is_column1], 1] = adj_cells[d, k2][
+                is_column1
+            ]
 
         # Schedule the cell ids for updates.
         update_cell_ids = numpy.unique(adj_cells.T.flat)

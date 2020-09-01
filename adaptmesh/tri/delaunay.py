@@ -246,7 +246,9 @@ class RegionatedTriangleIterator(object):
                     neighbour = triangle.neighbours[i]
                     if constrained and neighbour not in self.visited:
                         self.later.append((neighbour, depth + 1))
-                    elif neighbour is not None and neighbour not in self.visited:
+                    elif (
+                        neighbour is not None and neighbour not in self.visited
+                    ):
                         self.to_visit_stack.append((neighbour, depth))
                 return (self.group, depth, triangle)
             # flip the next level with this
@@ -347,7 +349,9 @@ def output_vertices(V, fh):
     """Output list of vertices as WKT to text file (for QGIS)"""
     fh.write("id;wkt;finite;info\n")
     for v in V:
-        fh.write("{0};POINT({1});{2};{3}\n".format(id(v), v, v.is_finite, v.info))
+        fh.write(
+            "{0};POINT({1});{2};{3}\n".format(id(v), v, v.is_finite, v.info)
+        )
 
 
 def output_triangles(T, fh):
@@ -548,7 +552,10 @@ class Triangle(object):
 
     @property
     def is_ccw(self):
-        return orient2d(self.vertices[0], self.vertices[1], self.vertices[2]) > 0.0
+        return (
+            orient2d(self.vertices[0], self.vertices[1], self.vertices[2])
+            > 0.0
+        )
 
 
 class Edge(object):
@@ -578,7 +585,9 @@ class Triangulation(object):
     def __init__(self):
         self.vertices = []
         self.triangles = []
-        self.external = None  # infinite, external triangle (outside convex hull)
+        self.external = (
+            None  # infinite, external triangle (outside convex hull)
+        )
 
 
 # -----------------------------------------------------------------------------
@@ -622,14 +631,18 @@ def triangulate(points, infos=None, segments=None):
     if segments is not None:
         constraints = ConstraintInserter(dt)
         constraints.insert(segments)
-        constraints = len([_ for _ in FiniteEdgeIterator(dt, constraints_only=True)])
+        constraints = len(
+            [_ for _ in FiniteEdgeIterator(dt, constraints_only=True)]
+        )
     # insert information for vertices
     if infos is not None:
         for info in infos:
             dt.vertices[info[0]].info = info[1]
     if False:
         with open("/tmp/alltris.wkt", "w") as fh:
-            output_triangles([t for t in TriangleIterator(dt, finite_only=False)], fh)
+            output_triangles(
+                [t for t in TriangleIterator(dt, finite_only=False)], fh
+            )
         with open("/tmp/allvertices.wkt", "w") as fh:
             output_vertices(dt.vertices, fh)
     return dt
@@ -703,7 +716,8 @@ class PointInserter(object):
         # neighbours outside triangle to insert to
         neighbours = [t0.neighbours[0], t0.neighbours[1]]
         neighbouridx = [
-            n.neighbours.index(t0) if n is not None else None for n in neighbours
+            n.neighbours.index(t0) if n is not None else None
+            for n in neighbours
         ]
         # make new triangles
         t1 = Triangle(b, c, v)
@@ -852,7 +866,10 @@ class PointInserter(object):
                 raise ValueError("No opposite triangle found")
             if (
                 incircle(
-                    t0.vertices[0], t0.vertices[1], t0.vertices[2], t1.vertices[side1]
+                    t0.vertices[0],
+                    t0.vertices[1],
+                    t0.vertices[2],
+                    t1.vertices[side1],
                 )
                 > 0
             ):
@@ -909,7 +926,9 @@ class PointInserter(object):
             else:
                 apex_around.append(ccw(neighbour.vertices.index(corner)))
         # the triangles around we link to the correct triangle *after* the flip
-        for neighbour, side, t in zip([AB, BC, CD, DA], apex_around, [t0, t0, t1, t1]):
+        for neighbour, side, t in zip(
+            [AB, BC, CD, DA], apex_around, [t0, t0, t1, t1]
+        ):
             if neighbour is not None:
                 self.link_1dir(neighbour, side, t)
 
@@ -991,7 +1010,9 @@ def triangle_overlaps_ray(vertex, towards):
     # this would be the case if towards lies outside
     # currently triangulated convex hull
     elif len(candidates) == 0:
-        raise ValueError("No overlap found (towards outside triangulated convex hull?)")
+        raise ValueError(
+            "No overlap found (towards outside triangulated convex hull?)"
+        )
     # the ray overlaps the legs of multiple triangles
     # only return the triangle for which the right leg overlaps with the ray
     # it is an error if there is not exactly one candidate that we can return
@@ -1056,7 +1077,9 @@ def mark_cavity(P, Q, triangles):
                 right = orient2d(R, Q, P)
                 # in case both are 0 ... not allowed
                 if left == 0 and right == 0:
-                    raise ValueError("Overlapping triangle leg found, not allowed")
+                    raise ValueError(
+                        "Overlapping triangle leg found, not allowed"
+                    )
                 n = t.neighbours[side]
                 e = Edge(n, n.neighbours.index(t))
                 if left >= 0 and right >= 0:
@@ -1175,7 +1198,9 @@ class ConstraintInserter(object):
         """
         new = filter(
             lambda x: not (
-                x.vertices[0] is None or x.vertices[1] is None or x.vertices[2] is None
+                x.vertices[0] is None
+                or x.vertices[1] is None
+                or x.vertices[2] is None
             ),
             self.triangulation.triangles,
         )
@@ -1308,8 +1333,10 @@ class CavityCDT(object):
         m = len(self.vertices)
         for i in range(len(self.pi) - 1, 0, -1):
             while (
-                self.distance[self.pi[i]] < self.distance[self.prev[self.pi[i]]]
-                and self.distance[self.pi[i]] < self.distance[self.next[self.pi[i]]]
+                self.distance[self.pi[i]]
+                < self.distance[self.prev[self.pi[i]]]
+                and self.distance[self.pi[i]]
+                < self.distance[self.next[self.pi[i]]]
             ):
                 # FIXME: is j correct ??? should i be i + 1 ?
                 j = randint(0, i)
@@ -1345,7 +1372,9 @@ class CavityCDT(object):
             # By indexing triangles this way, we
             T = Triangle(self.vertices[a], self.vertices[b], self.vertices[c])
             newtris[
-                permute(id(T.vertices[0]), id(T.vertices[1]), id(T.vertices[2]))
+                permute(
+                    id(T.vertices[0]), id(T.vertices[1]), id(T.vertices[2])
+                )
             ] = T
         for x in newtris.values():
             assert orient2d(x.vertices[0], x.vertices[1], x.vertices[2]) > 0
@@ -1355,7 +1384,9 @@ class CavityCDT(object):
         # (while previously they would have different id's).
         adj = {}
         for (f, t), v in self.adjacency.items():
-            adj[id(self.vertices[f]), id(self.vertices[t])] = id(self.vertices[v])
+            adj[id(self.vertices[f]), id(self.vertices[t])] = id(
+                self.vertices[v]
+            )
         # Link all the 3 sides of the new triangles properly
         for T in newtris.values():
             for i in range(3):
@@ -1408,7 +1439,10 @@ class CavityCDT(object):
         if x != -1 and (
             orient2d(self.vertices[u], self.vertices[v], self.vertices[w]) <= 0
             or incircle(
-                self.vertices[u], self.vertices[v], self.vertices[w], self.vertices[x]
+                self.vertices[u],
+                self.vertices[v],
+                self.vertices[w],
+                self.vertices[x],
             )
             > 0
         ):
@@ -1654,7 +1688,9 @@ def test_incremental():
     L = random_sorted_vertices(n=125000)
     tds = triangulate(L)
     with open("/tmp/alltris.wkt", "w") as fh:
-        output_triangles([t for t in TriangleIterator(tds, finite_only=False)], fh)
+        output_triangles(
+            [t for t in TriangleIterator(tds, finite_only=False)], fh
+        )
     with open("/tmp/allvertices.wkt", "w") as fh:
         output_vertices(tds.vertices, fh)
 
@@ -1776,14 +1812,17 @@ def test_poly():
                 try:
                     fh.write(
                         "LINESTRING({0[0]} {0[1]}, {1[0]} {1[1]})\n".format(
-                            trafo.centers[segment[0]], trafo.centers[segment[1]]
+                            trafo.centers[segment[0]],
+                            trafo.centers[segment[1]],
                         )
                     )
                 except Exception:
                     pass
     if True:
         with open("/tmp/alltris.wkt", "w") as fh:
-            output_triangles([t for t in TriangleIterator(dt, finite_only=False)], fh)
+            output_triangles(
+                [t for t in TriangleIterator(dt, finite_only=False)], fh
+            )
         with open("/tmp/allvertices.wkt", "w") as fh:
             output_vertices(dt.vertices, fh)
         with open("/tmp/interiortris.wkt", "w") as fh:

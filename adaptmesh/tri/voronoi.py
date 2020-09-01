@@ -90,7 +90,9 @@ def main():
     #                          )
     # FIXME: does not work with this dataset yet, as the vertex density is not
     # high enough: should add more vertices (densify)
-    with open("/home/martijn/workspace/splitarea/data/sandro/poly.geojson") as fh:
+    with open(
+        "/home/martijn/workspace/splitarea/data/sandro/poly.geojson"
+    ) as fh:
         c = json.loads(fh.read())
     conv = ToPointsAndSegments()
     poly = c["features"][0]["geometry"]["coordinates"]
@@ -113,7 +115,12 @@ def main():
         for (start, end, lft, rgt) in trafo.segments:
             fh.write(
                 "LINESTRING({0[0]} {0[1]}, {1[0]} {1[1]});{2};{3};{4};{5}\n".format(
-                    trafo.centers[start], trafo.centers[end], start, end, lft, rgt
+                    trafo.centers[start],
+                    trafo.centers[end],
+                    start,
+                    end,
+                    lft,
+                    rgt,
                 )
             )
 

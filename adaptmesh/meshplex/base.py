@@ -156,7 +156,9 @@ class _base_mesh:
         self.node_coords = nodes
         self._edge_lengths = None
 
-    def write(self, filename, point_data=None, cell_data=None, field_data=None):
+    def write(
+        self, filename, point_data=None, cell_data=None, field_data=None
+    ):
         pass
 
     @property
