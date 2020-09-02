@@ -7,7 +7,6 @@ Create triangular meshes by the adaptive process.
 
 ## Installation
 
-Installation happens via PyPI/pip:
 ```
 pip install adaptmesh
 ```
