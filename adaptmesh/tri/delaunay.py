@@ -382,67 +382,6 @@ def output_edges(E, fh):
         )
 
 
-# -- unused helper functions
-# def left_or_right(area):
-#     if area > 0:
-#         return "ccw / left / +"
-#     elif area < 0:
-#         return "cw / right / -"
-#     else:
-#         return "undetermined (straight)"
-#
-# def common(t0, side0, t1):
-#     """Given t0 and its side0 check which side of t1 is common
-#
-#     returns
-#         * side1 if t1 has a common edge with t0
-#         * None otherwise
-#     """
-#     orig0, dest0 = orig(side0), dest(side0) #aod(side0)
-#     for side1 in range(3):
-#         apex1, orig1, dest1 = apex(side1), orig(side1), dest(side1)
-#         if t0.vertices[orig0] is t1.vertices[dest1] and \
-#             t0.vertices[dest0] is t1.vertices[orig1]:
-#             return apex1
-#     return None
-#
-# def link(t0, t1):
-#     """Given 2 triangles t0 and t1
-#
-#     returns:
-#         * True if t0 and t1 can be linked (have a common side)
-#         * False if t0 and t1 cannot be linked (do not have a common side)
-#     """
-#     # Note, not used in the triangulation code, useful for building test cases
-#     result = False
-#     for side0 in range(3):
-#         apex0, orig0, dest0 = apex(side0), orig(side0), dest(side0)
-#         for side1 in range(3):
-#             apex1, orig1, dest1 = apex(side1), orig(side1), dest(side1)
-#             if t0.vertices[orig0] is t1.vertices[dest1] and \
-#                 t0.vertices[dest0] is t1.vertices[orig1]:
-#                 #print "", apex0, t0.vertices[orig0], t1.vertices[dest1]
-#                 #print "", apex1, t0.vertices[dest0], t1.vertices[orig1]
-#                 result = True
-#                 break
-#         if result:
-#             t0.neighbours[apex0] = t1
-#             t1.neighbours[apex1] = t0
-#             #print t0.neighbours
-#             #print t1.neighbours
-#             break
-#     return result
-
-
-# ------------------------------------------------------------------------------
-# Data structures
-# * Vertex
-# * InfiniteVertex
-# * Triangle
-# * Triangulation
-#
-
-
 class Vertex(object):
     """A vertex in the triangulation.
     Can carry extra information via its info property.
@@ -495,18 +434,6 @@ class InfiniteVertex(Vertex):
     @property
     def is_finite(self):
         return False
-
-
-#     @property
-#     def x(self):
-#         raise ValueError("Infinite vertex has no geometric embedding")
-#
-#     @property
-#     def y(self):
-#         raise ValueError("Infinite vertex has no geometric embedding")
-
-#     def __str__(self):
-#         return u"Inf Inf"
 
 
 class Triangle(object):
@@ -601,9 +528,6 @@ def triangulate(points, infos=None, segments=None):
     # for every point
     if len(points) == 0:
         raise ValueError("we cannot triangulate empty point list")
-    # logging.debug( "start "+ str(datetime.now()) )
-    # logging.debug( "" )
-    # logging.debug( "pre-processing" )
     # points without info
     points = [(pt[0], pt[1], key) for key, pt in enumerate(points)]
     # this randomizes the points and then sorts them for spatial coherence
@@ -670,10 +594,6 @@ class PointInserter(object):
         self.initialize(points)
         for j, pt in enumerate(points):
             self.append(pt)
-
-    #             if (j % 10000) == 0:
-    #                 logging.debug( " " +str( datetime.now() ) + str( j ))
-    # check_consistency(triangles)
 
     def initialize(self, points):
         """Initialize large triangle around point and external / dummy triangle
@@ -873,7 +793,6 @@ class PointInserter(object):
                 )
                 > 0
             ):
-                #                 # flip triangles without creating new triangle objects
                 self.flip(t0, side0, t1, side1)
                 # check if all 4 edges around quadrilateral just flipped
                 # are now good: i.e. delaunay criterion applies
@@ -1188,8 +1107,6 @@ class ConstraintInserter(object):
                 self.insert_constraint(p, q)
             except Exception as err:
                 print(err)
-        #             if (j % 10000) == 0:
-        #                 logging.debug( " " + str( datetime.now() ) + str( j ) )
         self.remove_empty_triangles()
 
     def remove_empty_triangles(self):

@@ -52,14 +52,17 @@ m = triangulate([(0.0, 0.0),
 
 ## Licensing
 
-The main source code of `adaptmesh` is distributed under the MIT License; see
-LICENSE.
+The main source code of `adaptmesh` is distributed under the MIT License.
 
 `adaptmesh` ships with customized versions of the following packages:
 
 - `tri v0.3.1.dev0` (ported to Python 3; MIT)
-- `optimesh v0.6.2` (last version with MIT - later versions are GPLv3; trimmed
+- `optimesh v0.6.2` (the last version with MIT - later versions are GPLv3; trimmed
   down version with minor changes)
-- `meshplex v0.12.3` (last version with MIT - later versions are GPLv3; trimmed
-    down version with minor changes)
+- `meshplex v0.12.3` (the last version with MIT - later versions are GPLv3; trimmed
+  down version with minor changes)
+
+The licenses of the included packages can be found also in `LICENSE.md` and the
+respective subdirectories, i.e. `./adaptmesh/*/LICENSE`. See `LICENSE.md` for
+more information.
 
