@@ -57,10 +57,10 @@ The main source code of `adaptmesh` is distributed under the MIT License.
 `adaptmesh` ships with customized versions of the following packages:
 
 - `tri v0.3.1.dev0` (ported to Python 3; MIT)
-- `optimesh v0.6.2` (the last version with MIT - later versions are GPLv3; trimmed
-  down version with minor changes)
-- `meshplex v0.12.3` (the last version with MIT - later versions are GPLv3; trimmed
-  down version with minor changes)
+- `optimesh v0.6.2` (trimmed down version with minor changes to the edge
+  flipping; the last version with MIT)
+- `meshplex v0.12.3` (trimmed down version with minor changes, i.e. removal of
+  unnecessary imports; the last version with MIT)
 
 The licenses of the included packages can be found also in `LICENSE.md` and the
 respective subdirectories, i.e. `./adaptmesh/*/LICENSE`. See `LICENSE.md` for
