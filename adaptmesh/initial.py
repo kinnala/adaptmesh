@@ -51,6 +51,5 @@ def cdt(corner_points=None, **params):
         t.append(newtri)
 
     m = MeshTri(np.array(p).T, np.array(t).T)
-    m.refine()
 
     return m
