@@ -16,9 +16,9 @@ def test_square():
 @pytest.mark.parametrize("y2", [0.0, -0.4])
 @pytest.mark.parametrize("y3", [1.0, 1.3])
 def test_triangle(x1, x2, x3, y1, y2, y3):
-    quality = 0.9
+    quality = 0.91
     m = triangulate(
-        [(x1, y1), (x2, y2), (x3, y3)], quality=quality, max_refloops=12
+        [(x1, y1), (x2, y2), (x3, y3)], quality=quality, max_refloops=15
     )
     is_quality = avg_quality(m, quality=quality)
     assert is_quality

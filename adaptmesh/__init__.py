@@ -2,7 +2,7 @@ from .process import process
 
 
 def triangulate(
-    corner_points, max_refloops=10, theta=0.8, smooth_steps=50, quality=0.9
+    corner_points, max_refloops=20, theta=0.8, smooth_steps=50, quality=0.9
 ):
     from .criterion import avg_quality
     from .initial import cdt
