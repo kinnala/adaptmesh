@@ -5,6 +5,12 @@
 
 Create triangular meshes by the adaptive process.
 
+*This is work-in-progress.  I'm currently writing a short whitepaper which explains the logic
+behind this simple mesh generator.  The basic idea is the use standard techniques from
+adaptive finite element methods, an arbitrary initial mesh, and a robust mesh smoothing algorithm.
+The next step is to make this more usable, i.e., add support for holes and tagging of boundaries.
+Stay tuned.*
+
 ## Installation
 
 ```
