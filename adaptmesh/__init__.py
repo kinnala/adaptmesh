@@ -1,3 +1,7 @@
+import types
+
+from skfem.visuals.matplotlib import draw, show
+
 from .process import process
 
 
@@ -11,7 +15,7 @@ def triangulate(
     from .smooth import cpt
     from .solve import laplace
 
-    return process(
+    m = process(
         initial=cdt,
         solve=laplace,
         mark=adaptive_theta,
@@ -24,3 +28,7 @@ def triangulate(
         smooth_steps=smooth_steps,
         quality=quality,
     )
+    m.draw = types.MethodType(lambda self, **kwargs: draw(self, **kwargs), m)
+    m.show = types.MethodType(lambda self, **kwargs: show(self, **kwargs), m)
+
+    return m

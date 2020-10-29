@@ -1,4 +1,4 @@
-name: adaptmesh
+name: ci
 
 on: [push]
 

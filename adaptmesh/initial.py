@@ -1,6 +1,4 @@
 """Creation of initial meshes."""
-
-
 import matplotlib.path as mpltPath
 import numpy as np
 from skfem import MeshTri
