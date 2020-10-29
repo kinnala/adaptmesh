@@ -2,6 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/adaptmesh)](https://pypi.org/project/adaptmesh/)
 [![PyPI - License](https://img.shields.io/pypi/l/adaptmesh)](https://opensource.org/licenses/MIT)
+![ci](https://github.com/kinnala/adaptmesh/workflows/ci/badge.svg)
 
 Create triangular meshes by the adaptive process.
 
