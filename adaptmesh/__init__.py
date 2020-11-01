@@ -6,7 +6,7 @@ from .process import process
 
 
 def triangulate(
-    corner_points, max_refloops=20, theta=0.8, smooth_steps=50, quality=0.9
+        corner_points, max_refloops=20, theta=0.8, smooth_steps=50, quality=0.9, verbose=False
 ):
     from .criterion import avg_quality
     from .initial import cdt
@@ -27,6 +27,7 @@ def triangulate(
         theta=theta,
         smooth_steps=smooth_steps,
         quality=quality,
+        verbose=verbose,
     )
     m.draw = types.MethodType(lambda self, **kwargs: draw(self, **kwargs), m)
     m.show = types.MethodType(lambda self, **kwargs: show(self, **kwargs), m)

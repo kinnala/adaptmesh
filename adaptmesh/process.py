@@ -3,6 +3,8 @@
 
 import warnings
 
+from skfem.visuals.matplotlib import draw
+
 
 def process(
     initial=None,
@@ -12,6 +14,7 @@ def process(
     smooth=None,
     criterion=None,
     max_refloops=6,
+    verbose=False,
     **params
 ):
 
@@ -23,12 +26,19 @@ def process(
     else:
         raise Exception("The initial mesh not given.")
 
+    if verbose:
+        draw(mesh)
+
     for itr in range(max_refloops):
         estimators = solve(mesh, **params)
         elements = mark(mesh, estimators, **params)
         mesh = refine(mesh, elements, **params)
+        if verbose:
+            draw(mesh)
         if smooth is not None:
             mesh = smooth(mesh, **params)
+            if verbose:
+                draw(mesh)
         if criterion is not None:
             if criterion(mesh, **params):
                 break
