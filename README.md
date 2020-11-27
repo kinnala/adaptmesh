@@ -7,7 +7,7 @@
 
 Create triangular meshes by the adaptive process.
 
-The user feeds in a polygon and a bad mesh is created.  Then the mesh gets
+The user feeds in a polygon and a bad mesh is created.  Then the bad mesh gets
 improved by adaptive finite elements and mesh smoothing.  The approach is
 detailed [here](https://arxiv.org/abs/2011.07919).
 
