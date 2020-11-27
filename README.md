@@ -7,13 +7,17 @@
 
 Create triangular meshes by the adaptive process.
 
-Approach is described [here](https://arxiv.org/abs/2011.07919).
+The user feeds in a polygon and a bad mesh is created.  Then the mesh gets
+improved by adaptive finite elements and mesh smoothing.  The approach is
+detailed [here](https://arxiv.org/abs/2011.07919).
 
 ## Installation
 
+It's pure Python so a simple
 ```
 pip install adaptmesh
 ```
+should suffice.
 
 ## Dependencies
 
@@ -23,6 +27,8 @@ pip install adaptmesh
 - `scikit-fem`
 
 ## Examples
+
+The mesh generator is called through the function `adaptmesh.triangulate`.
 
 ### Square with default settings
 
