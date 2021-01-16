@@ -13,11 +13,9 @@ approach is detailed [here](https://arxiv.org/abs/2011.07919).
 
 ## Installation
 
-It's pure Python so a simple
 ```
 pip install adaptmesh
 ```
-should suffice.
 
 ## Dependencies
 
