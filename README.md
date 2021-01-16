@@ -72,6 +72,36 @@ m = triangulate([(0., 0.),
 
 ![img](https://user-images.githubusercontent.com/973268/104822154-39c4fc80-5849-11eb-9f2c-057c05314b0c.png)
 
+### Subdomains
+
+```python
+m1 = triangulate([(0., 0.),
+                  (1., 0.),
+                  (.7, 1.),
+                  (0., 1.),],
+                 split=[(1, 8),
+                        (2, 6)],
+                 quality=0.91)
+
+m2 = triangulate([(0., 2.),
+                  (2., 2.),
+                  (2., 0.),
+                  (1., 0.),
+                  (.7, 1.),
+                  (0., 1.)],
+                 split=[(3, 8),
+                        (4, 6)],
+                 quality=0.91)
+
+m = m1 + m2
+```
+Multiple meshes can be joined to emulate subdomains.  However, the nodes
+must match.  Above, segments are splitted to facilitate the matching, e.g.,
+`[(1, 8), (2, 6)]` means that the second and the third segments are split
+using eight and six equispaced extra nodes, respectively.
+
+![img](https://user-images.githubusercontent.com/973268/104823817-a6de8f00-5855-11eb-9da4-6ff09aa5391b.png)
+
 ## Licensing
 
 The main source code of `adaptmesh` is distributed under the MIT License.
