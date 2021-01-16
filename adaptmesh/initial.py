@@ -11,12 +11,11 @@ def cdt(corner_points=None, **params):
     if corner_points is None:
         raise Exception("Parameter 'corner_points' required.")
 
-
     points = corner_points.copy()
     segments = [(i, (i + 1) % len(points)) for i in range(len(points))]
 
-    if 'extra_polygons' in params:
-        for polygon in params['extra_polygons']:
+    if "extra_polygons" in params:
+        for polygon in params["extra_polygons"]:
             N = len(points)
             for point in polygon:
                 points.append(point)
@@ -39,7 +38,7 @@ def cdt(corner_points=None, **params):
 
         # add new vertices and calculate middle point for pruning
         newtri = []
-        mpx, mpy = 0., 0.
+        mpx, mpy = 0.0, 0.0
         for vert in triangle.vertices:
             if (vert.x, vert.y) not in verts:
                 verts[(vert.x, vert.y)] = i
