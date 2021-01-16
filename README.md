@@ -57,6 +57,21 @@ m = triangulate([(0.0, 0.0),
 
 ![img](https://user-images.githubusercontent.com/973268/91669743-14488800-eb20-11ea-8a16-0089d8ca081c.png)
 
+### Holes
+
+```python
+m = triangulate([(0., 0.),
+                 (1., 0.),
+                 (1., 1.),
+                 (0., 1.),],
+                holes=[[(.25, .25),
+                        (.75, .25),
+                        (.75, .75),
+                        (.25, .75)]])
+```
+
+![img](https://user-images.githubusercontent.com/973268/104822154-39c4fc80-5849-11eb-9f2c-057c05314b0c.png)
+
 ## Licensing
 
 The main source code of `adaptmesh` is distributed under the MIT License.
