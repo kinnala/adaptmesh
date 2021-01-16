@@ -22,8 +22,9 @@ def cdt(corner_points=None, **params):
                 points.append(point)
             for i in range(len(hole)):
                 segments.append((N + i, N + (i + 1) % len(hole)))
-            holepaths.append(mpltPath.Path([[point[0], point[1]]
-                                            for point in hole]))
+            holepaths.append(
+                mpltPath.Path([[point[0], point[1]] for point in hole])
+            )
 
     dt = triangulate(points, segments)
 
