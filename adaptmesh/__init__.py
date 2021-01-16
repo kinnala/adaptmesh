@@ -12,6 +12,7 @@ def triangulate(
     smooth_steps=50,
     quality=0.9,
     verbose=False,
+    **params,
 ):
     from .criterion import avg_quality
     from .initial import cdt
@@ -33,6 +34,7 @@ def triangulate(
         smooth_steps=smooth_steps,
         quality=quality,
         verbose=verbose,
+        **params,
     )
     m.draw = types.MethodType(lambda self, **kwargs: draw(self, **kwargs), m)
     m.show = types.MethodType(lambda self, **kwargs: show(self, **kwargs), m)

@@ -3,7 +3,7 @@ import matplotlib.path as mpltPath
 import numpy as np
 from skfem import MeshTri
 
-from .tri import ToPointsAndSegments, triangulate
+from .tri import triangulate
 
 
 def cdt(corner_points=None, **params):
@@ -11,16 +11,25 @@ def cdt(corner_points=None, **params):
     if corner_points is None:
         raise Exception("Parameter 'corner_points' required.")
 
-    points = corner_points
-    segs = ToPointsAndSegments()
-    segs.add_polygon([points])
-    dt = triangulate(segs.points, segs.segments)
+
+    points = corner_points.copy()
+    segments = [(i, (i + 1) % len(points)) for i in range(len(points))]
+
+    if 'extra_polygons' in params:
+        for polygon in params['extra_polygons']:
+            N = len(points)
+            for point in polygon:
+                points.append(point)
+            for i in range(len(polygon)):
+                segments.append((N + i, N + (i + 1) % len(polygon)))
+
+    dt = triangulate(points, segments)
 
     # find triangles inside the polygon
     p, t = [], []
     verts = {}
     i = 0
-    path = mpltPath.Path([[point[0], point[1]] for point in points])
+    path = mpltPath.Path([[point[0], point[1]] for point in corner_points])
 
     for triangle in dt.triangles:
 
@@ -28,9 +37,9 @@ def cdt(corner_points=None, **params):
         if not triangle.is_finite:
             continue
 
-        # add new verts
+        # add new vertices and calculate middle point for pruning
         newtri = []
-        mpx, mpy = 0.0, 0.0
+        mpx, mpy = 0., 0.
         for vert in triangle.vertices:
             if (vert.x, vert.y) not in verts:
                 verts[(vert.x, vert.y)] = i
