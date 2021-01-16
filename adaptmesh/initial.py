@@ -13,14 +13,17 @@ def cdt(corner_points=None, **params):
 
     points = corner_points.copy()
     segments = [(i, (i + 1) % len(points)) for i in range(len(points))]
+    holepaths = []
 
-    if "extra_polygons" in params:
-        for polygon in params["extra_polygons"]:
+    if "holes" in params:
+        for hole in params["holes"]:
             N = len(points)
-            for point in polygon:
+            for point in hole:
                 points.append(point)
-            for i in range(len(polygon)):
-                segments.append((N + i, N + (i + 1) % len(polygon)))
+            for i in range(len(hole)):
+                segments.append((N + i, N + (i + 1) % len(hole)))
+            holepaths.append(mpltPath.Path([[point[0], point[1]]
+                                            for point in hole]))
 
     dt = triangulate(points, segments)
 
@@ -52,6 +55,14 @@ def cdt(corner_points=None, **params):
         mpy /= 3.0
 
         if not path.contains_point([mpx, mpy]):
+            continue
+
+        discard = False
+        for hpath in holepaths:
+            if hpath.contains_point([mpx, mpy]):
+                discard = True
+                break
+        if discard:
             continue
 
         t.append(newtri)
