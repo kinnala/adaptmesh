@@ -120,8 +120,6 @@ more information.
 
 ## Changelog
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
-
 ### Unreleased
 
 - Added: keyword argument `split` of `triangulate` allows further splitting
