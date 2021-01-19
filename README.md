@@ -118,3 +118,15 @@ The licenses of the included packages can be found also in `LICENSE.md` and the
 respective subdirectories, i.e. `./adaptmesh/*/LICENSE`. See `LICENSE.md` for
 more information.
 
+## Changelog
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+### Unreleased
+
+- Added: keyword argument `split` of `triangulate` allows further splitting
+  the provided segments.  This is useful because the segment endpoints are
+  always preserved in the final mesh.
+- Added: keyword argument `holes` of `triangulate` allows specifying additional
+  polygonal areas inside the domain that will be free of triangles in the final
+  mesh.
