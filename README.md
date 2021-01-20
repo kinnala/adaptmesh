@@ -122,6 +122,8 @@ more information.
 
 ### Unreleased
 
+### [0.2.0] - 2021-01-20
+
 - Added: keyword argument `split` of `triangulate` allows further splitting
   the provided segments.  This is useful because the segment endpoints are
   always preserved in the final mesh.
