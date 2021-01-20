@@ -1,7 +1,7 @@
 default:
 	python -m pytest
 
-release:
+release: clean
 	python -m pep517.build --source --binary .
 	twine upload dist/*
 
