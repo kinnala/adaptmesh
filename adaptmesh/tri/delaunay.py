@@ -331,17 +331,17 @@ def cw(i):
 
 
 def apex(side):
-    """Given a side, give the apex of the triangle """
+    """Given a side, give the apex of the triangle"""
     return side % 3
 
 
 def orig(side):
-    """Given a side, give the origin of the triangle """
+    """Given a side, give the origin of the triangle"""
     return (side + 1) % 3  # ccw(side)
 
 
 def dest(side):
-    """Given a side, give the destination of the triangle """
+    """Given a side, give the destination of the triangle"""
     return (side - 1) % 3  # cw(side)
 
 
@@ -407,12 +407,12 @@ class Vertex(object):
             raise IndexError("No such ordinate: {}".format(i))
 
     def distance(self, other):
-        """Cartesian distance to other point """
+        """Cartesian distance to other point"""
         # only used in triangle.__str__
         return hypot(self.x - other.x, self.y - other.y)
 
     def distance2(self, other):
-        """Cartesian distance *squared* to other point """
+        """Cartesian distance *squared* to other point"""
         # Used for distances in random triangle close to point
         return pow(self.x - other.x, 2) + pow(self.y - other.y, 2)
 
