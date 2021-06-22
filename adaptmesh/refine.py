@@ -2,5 +2,5 @@
 
 
 def rgb(m, elems, **params):
-    m.refine(elems)
+    m = m.refined(elems)
     return m
