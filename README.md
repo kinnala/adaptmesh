@@ -125,6 +125,10 @@ more information.
 
 ### Unreleased
 
+### [0.3.0] - 2021-06-22
+
+- Fixed: Support for `scikit-fem>=3`. Dependency update broke the mesh refinement.
+
 ### [0.2.0] - 2021-01-20
 
 - Added: keyword argument `split` of `triangulate` allows further splitting
