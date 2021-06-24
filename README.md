@@ -58,7 +58,7 @@ m = triangulate([(0.0, 0.0),
                  (0.5, 1.5),], quality=0.95)  # default: 0.9
 ```
 
-![img](https://user-images.githubusercontent.com/973268/91669743-14488800-eb20-11ea-8a16-0089d8ca081c.png)
+![Example mesh](./svgs/ex2.svg)
 
 ### Holes
 
@@ -73,7 +73,7 @@ m = triangulate([(0., 0.),
                         (.25, .75)]])
 ```
 
-![img](https://user-images.githubusercontent.com/973268/104822154-39c4fc80-5849-11eb-9f2c-057c05314b0c.png)
+![Example mesh](./svgs/ex3.svg)
 
 ### Subdomains
 
@@ -103,7 +103,7 @@ must match.  Above, segments are splitted to facilitate the matching, e.g.,
 `[(1, 8), (2, 6)]` means that the second and the third segments are split
 using eight and six equispaced extra nodes, respectively.
 
-![img](https://user-images.githubusercontent.com/973268/104823817-a6de8f00-5855-11eb-9da4-6ff09aa5391b.png)
+![Example mesh](./svgs/ex4.svg)
 
 ## Licensing
 
