@@ -42,7 +42,7 @@ m = triangulate([(0., 0.),
 # m.t are the elements
 ```
 
-![img](https://user-images.githubusercontent.com/973268/91669738-02ff7b80-eb20-11ea-94c5-dfdc4365c9e6.png)
+![Example mesh](./svgs/ex1.svg)
 
 ### Non-convex shape
 
