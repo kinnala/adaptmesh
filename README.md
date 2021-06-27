@@ -9,7 +9,19 @@ Create triangular meshes by the adaptive process.
 
 The user feeds in a polygon and a low quality mesh is created.  Then the low
 quality mesh gets improved by adaptive finite elements and mesh smoothing.  The
-approach is detailed [here](https://arxiv.org/abs/2011.07919).
+approach is detailed [in the following paper](https://rakenteidenmekaniikka.journal.fi/article/view/99648):
+```
+@article{adaptmesh,
+    title={A simple technique for unstructured mesh generation via adaptive finite elements},
+    author={Gustafsson, Tom},
+    volume={54},
+    doi={10.23998/rm.99648},
+    number={2},
+    journal={Rakenteiden Mekaniikka},
+    year={2021},
+    pages={69--79}
+}
+```
 
 ## Installation
 
