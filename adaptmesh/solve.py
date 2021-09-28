@@ -4,9 +4,9 @@
 import numpy as np
 from skfem import (
     ElementTriP1,
-    FacetBasis,
+    InteriorFacetBasis,
     Functional,
-    InteriorBasis,
+    CellBasis,
     condense,
     solve,
 )
@@ -25,13 +25,13 @@ def laplace(m, **params):
 
     """
     e = ElementTriP1()
-    basis = InteriorBasis(m, e)
+    basis = CellBasis(m, e)
     A = laplacian.assemble(basis)
     b = unit_load.assemble(basis)
     u = solve(*condense(A, b, I=m.interior_nodes()))
 
     # evaluate the error estimators
-    fbasis = [FacetBasis(m, e, side=i) for i in [0, 1]]
+    fbasis = [InteriorFacetBasis(m, e, side=i) for i in [0, 1]]
     w = {"u" + str(i + 1): fbasis[i].interpolate(u) for i in [0, 1]}
 
     @Functional
