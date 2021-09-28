@@ -137,6 +137,10 @@ more information.
 
 ### Unreleased
 
+### [0.3.1] - 2021-09-28
+
+- Fixed: Support for `scikit-fem>=4`.
+
 ### [0.3.0] - 2021-06-22
 
 - Fixed: Support for `scikit-fem>=3`. Dependency update broke the mesh refinement.
