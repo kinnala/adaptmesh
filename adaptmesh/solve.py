@@ -3,10 +3,10 @@
 
 import numpy as np
 from skfem import (
-    ElementTriP1,
-    InteriorFacetBasis,
-    Functional,
     CellBasis,
+    ElementTriP1,
+    Functional,
+    InteriorFacetBasis,
     condense,
     solve,
 )
