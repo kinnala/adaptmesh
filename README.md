@@ -54,7 +54,7 @@ m = triangulate([(0., 0.),
 # m.t are the elements
 ```
 
-![Example mesh](./svgs/ex1.svg)
+![Example mesh 1](https://github.com/kinnala/adaptmesh/raw/master/svgs/ex1.svg)
 
 ### Non-convex shape
 
@@ -70,7 +70,7 @@ m = triangulate([(0.0, 0.0),
                  (0.5, 1.5),], quality=0.95)  # default: 0.9
 ```
 
-![Example mesh](./svgs/ex2.svg)
+![Example mesh 2](https://github.com/kinnala/adaptmesh/raw/master/svgs/ex2.svg)
 
 ### Holes
 
@@ -85,7 +85,7 @@ m = triangulate([(0., 0.),
                         (.25, .75)]])
 ```
 
-![Example mesh](./svgs/ex3.svg)
+![Example mesh 3](https://github.com/kinnala/adaptmesh/raw/master/svgs/ex3.svg)
 
 ### Subdomains
 
@@ -115,7 +115,7 @@ must match.  Above, segments are splitted to facilitate the matching, e.g.,
 `[(1, 8), (2, 6)]` means that the second and the third segments are split
 using eight and six equispaced extra nodes, respectively.
 
-![Example mesh](./svgs/ex4.svg)
+![Example mesh 4](https://github.com/kinnala/adaptmesh/raw/master/svgs/ex4.svg)
 
 ## Licensing
 
