@@ -137,6 +137,10 @@ more information.
 
 ### Unreleased
 
+### [0.3.2] - 2021-09-28
+
+- Fixed: Rendering of README in pypi.
+
 ### [0.3.1] - 2021-09-28
 
 - Fixed: Support for `scikit-fem>=4`.
