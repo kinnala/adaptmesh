@@ -44,7 +44,7 @@ def cdt(corner_points=None, **params):
                 mpltPath.Path([[point[0], point[1]] for point in hole])
             )
 
-    dt = triangulate(points, segments)
+    dt = triangulate(points, segments=segments)
 
     # find triangles inside the polygon
     p, t = [], []
