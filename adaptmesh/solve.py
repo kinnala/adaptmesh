@@ -37,7 +37,7 @@ def laplace(m, **params):
     @Functional
     def interior_residual(w):
         h = w.h
-        return h ** 2
+        return h**2
 
     eta_K = interior_residual.elemental(basis)
 

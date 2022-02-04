@@ -724,7 +724,7 @@ class MeshTri(_base_mesh):
         #
         #    curl = z * sum_edge_dot_A * 0.5 / |A|^2.
         #
-        curl = z * (0.5 * sum_edge_dot_A / self.cell_volumes ** 2)[..., None]
+        curl = z * (0.5 * sum_edge_dot_A / self.cell_volumes**2)[..., None]
         return curl
 
     def num_delaunay_violations(self):

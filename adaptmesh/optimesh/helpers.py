@@ -80,7 +80,7 @@ def runner(
 
         # Abort the loop if the update was small
         diff_norm_2 = numpy.einsum("ij,ij->i", diff, diff)
-        is_final = numpy.all(diff_norm_2 < tol ** 2) or k >= max_num_steps
+        is_final = numpy.all(diff_norm_2 < tol**2) or k >= max_num_steps
 
         if is_final or step_filename_format:
             if is_final:
