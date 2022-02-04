@@ -1103,10 +1103,7 @@ class ConstraintInserter(object):
                 self.triangulation.vertices[segment[0]],
                 self.triangulation.vertices[segment[1]],
             )
-            try:
-                self.insert_constraint(p, q)
-            except Exception as err:
-                print(err)
+            self.insert_constraint(p, q)
         self.remove_empty_triangles()
 
     def remove_empty_triangles(self):
@@ -1121,7 +1118,7 @@ class ConstraintInserter(object):
             ),
             self.triangulation.triangles,
         )
-        self.triangulation.triangles = new
+        self.triangulation.triangles = list(new)
 
     def insert_constraint(self, P, Q):
         """Insert constraint into triangulation.
@@ -1223,7 +1220,7 @@ class CavityCDT(object):
         # Initialization for the algorithm
         m = len(self.vertices)
         # Make random permutation of point indices
-        self.pi = range(1, m - 1)
+        self.pi = list(range(1, m - 1))
         # Randomize processing order
         shuffle(self.pi)
         # Link all vertices in a circular list that

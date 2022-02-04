@@ -1,5 +1,8 @@
 default:
 	python -m pytest
+	flake8 .
+	isort --check .
+	black --check .
 
 release: clean
 	python -m pep517.build --source --binary .
