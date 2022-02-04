@@ -137,6 +137,10 @@ more information.
 
 ### Unreleased
 
+### [0.3.3] - 2022-02-04
+
+- Fixed: Properly respect segments in the initial triangulation.
+
 ### [0.3.2] - 2021-09-28
 
 - Fixed: Rendering of README in pypi.
