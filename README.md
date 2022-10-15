@@ -1,11 +1,11 @@
 # adaptmesh
 
+Create triangular meshes using adaptive finite elements.
+
 [![PyPI](https://img.shields.io/pypi/v/adaptmesh)](https://pypi.org/project/adaptmesh/)
 [![PyPI - License](https://img.shields.io/pypi/l/adaptmesh)](https://opensource.org/licenses/MIT)
 ![ci](https://github.com/kinnala/adaptmesh/workflows/ci/badge.svg)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4172331.svg)](https://doi.org/10.5281/zenodo.4172331)
-
-Create triangular meshes by the adaptive process.
 
 The user feeds in a polygon and a low quality mesh is created.  Then the low
 quality mesh gets improved by adaptive finite elements and mesh smoothing.  The
