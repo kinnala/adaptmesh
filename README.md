@@ -40,9 +40,9 @@ pip install adaptmesh
 ## Dependencies
 
 - `numpy`
-- `scipy`
-- `matplotlib`
-- `scikit-fem`
+- `scipy` for sparse linear algebra
+- `matplotlib` for an efficient search of points inside a polygon
+- `scikit-fem` for adaptive finite elements
 
 ## Examples
 
