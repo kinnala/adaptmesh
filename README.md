@@ -23,14 +23,6 @@ approach is detailed [in the following paper](https://rakenteidenmekaniikka.jour
 }
 ```
 
-`adaptmesh` ships with customized versions of the following packages:
-
-- `tri v0.3.1.dev0` (ported to Python 3; Copyright (c) 2015 Martijn Meijers; MIT; [source](https://pypi.org/project/tri/))
-- `optimesh v0.6.3` (trimmed down version with minor changes to the edge
-  flipping; Copyright (c) 2018-2020 Nico Schlömer; the last version with MIT; [source](https://github.com/nschloe/optimesh/releases/tag/v0.6.3))
-- `meshplex v0.12.3` (trimmed down version with minor changes, i.e. removal of
-  unnecessary imports; Copyright (c) 2017-2020 Nico Schlömer; the last version with MIT; [source](https://github.com/nschloe/meshplex/releases/tag/v0.12.3))
-
 ## Installation
 
 ```
@@ -128,6 +120,14 @@ using eight and six equispaced extra nodes, respectively.
 ## Licensing
 
 The main source code of `adaptmesh` is distributed under the MIT License.
+
+`adaptmesh` ships with customized versions of the following packages:
+
+- `tri v0.3.1.dev0` (ported to Python 3; Copyright (c) 2015 Martijn Meijers; MIT; [source](https://pypi.org/project/tri/))
+- `optimesh v0.6.3` (trimmed down version with minor changes to the edge
+  flipping; Copyright (c) 2018-2020 Nico Schlömer; the last version with MIT; [source](https://github.com/nschloe/optimesh/releases/tag/v0.6.3))
+- `meshplex v0.12.3` (trimmed down version with minor changes, i.e. removal of
+  unnecessary imports; Copyright (c) 2017-2020 Nico Schlömer; the last version with MIT; [source](https://github.com/nschloe/meshplex/releases/tag/v0.12.3))
 
 The licenses of the included packages can be found also in `LICENSE.md` and the
 respective subdirectories, i.e. `./adaptmesh/*/LICENSE`. See `LICENSE.md` for
